@@ -132,12 +132,16 @@ with gr.Blocks(title="E-Ticaret Analiz Dashboard") as demo:
     gr.Markdown("# 🛒 E-Ticaret Analiz Dashboard")
     gr.Markdown("**Online Retail II** veri seti üzerinde RFM Segmentasyonu, Churn Tahmini ve LSTM Satış Tahmini")
     
-    # Metrikler
-    with gr.Row():
-        gr.Metric(value=len(rfm), label="Toplam Müşteri")
-        gr.Metric(value=f"{rfm['Churn'].mean()*100:.1f}%", label="Churn Oranı")
-        gr.Metric(value=f"£{rfm['Monetary'].mean():,.0f}", label="Ortalama Harcama")
-        gr.Metric(value=f"{rfm['Frequency'].mean():.1f}x", label="Ort. Satın Alma")
+    # Metrikler (Markdown ile)
+    metric_text = f"""
+    | Metrik | Değer |
+    |---|---|
+    | 👥 Toplam Müşteri | {len(rfm):,} |
+    | 🔴 Churn Oranı | {rfm['Churn'].mean()*100:.1f}% |
+    | 💷 Ortalama Harcama | £{rfm['Monetary'].mean():,.0f} |
+    | 🛍️ Ort. Satın Alma | {rfm['Frequency'].mean():.1f}x |
+    """
+    gr.Markdown(metric_text)
     
     with gr.Tabs():
         with gr.TabItem("📊 RFM Segmentasyonu"):
